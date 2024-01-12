@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TodoTile extends StatelessWidget {
   final String taskName;
+  final String taskDay;
   final bool taskCompleted;
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteFunction;
@@ -12,6 +13,7 @@ class TodoTile extends StatelessWidget {
   TodoTile({
     super.key,
     required this.taskName,
+    required this.taskDay,
     required this.taskCompleted,
     required this.onChanged,
     required this.deleteFunction,
@@ -33,7 +35,7 @@ class TodoTile extends StatelessWidget {
             width: 450,
             padding: const EdgeInsets.all(12.0),
             decoration: BoxDecoration(
-                color: Color(0xFF31304D),
+                color: const Color(0xFF242726),
                 borderRadius: BorderRadius.circular(8)),
             child: Row(
               children: [
@@ -42,18 +44,36 @@ class TodoTile extends StatelessWidget {
                   onChanged: onChanged,
                   activeColor: Colors.black,
                 ),
-                Container(
+                SizedBox(
                     width: 394,
                     height: 20,
                     child: OverflowBox(
                       maxWidth: 394,
                       maxHeight: 20,
-                      child: Text(
-                        taskName,
-                        style: TextStyle(
-                            decoration: taskCompleted
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            taskName,
+                            style: TextStyle(
+                                decoration: taskCompleted
+                                    ? TextDecoration.lineThrough
+                                    : TextDecoration.none),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                taskDay,
+                                style: TextStyle(
+                                  color: taskDay == "week"
+                                      ? const Color.fromARGB(255, 26, 255, 0)
+                                      : const Color.fromARGB(255, 255, 145, 0),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            ],
+                          )
+                        ],
                       ),
                     ))
               ],

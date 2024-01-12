@@ -3,6 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class TodoDataBase {
   List todoList = [];
+  List todayList = [];
+  List weekList = [];
   List sideMenu = [
     [Icons.adjust, "Today"],
     [Icons.next_week_outlined, "Week"],
@@ -13,26 +15,31 @@ class TodoDataBase {
 
   void createInitialData() {
     todoList = [
-      ['datesortdate sort date sort date sort date sort date sort ', false],
-      ['urgent sort', false],
-      ['grid template', false],
-      ['day plan', false],
-      ['week plan', false],
-      ['all', false],
+      ['walk for 30 minutes', false, "week"],
+      ['run at 4:00 am', false, "today"],
+      ['do exercise', false, "week"],
+      ['have a breakfast', false, "week"],
+      ['Play PS5', false, "today"],
+      ['sleep', false, "week"],
     ];
   }
 
-  void daySort() {}
+  void completedSort(int index) {
+    final switchElement = todoList[index];
+    int i = index - 1;
 
-  void weekSort() {}
+    todoList.removeAt(index);
 
-  void completedSort() {
-    for (int i = 0; i < todoList.length; i++) {
-      if (todoList[i][1] == true) {
-        todoList.add(todoList[i]);
-        todoList.removeAt(i);
+    while (i >= 0) {
+      if (todoList[i][1] == false) {
+        todoList.insert(i + 1, switchElement);
+        break;
+      } else if (i == 0) {
+        todoList.insert(0, switchElement);
       }
+      i--;
     }
+    updateData();
   }
 
   void loadData() {
